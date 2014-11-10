@@ -1,4 +1,4 @@
-## node-api-exp-03 ##
+## node-api-exp-04 ##
 
   Experimental source used for Docker CI exploration.
 
@@ -22,7 +22,7 @@
 
 Build Docker image:
 
-    $ sudo docker build -t node-api-exp-03:1.0.0 .
+    $ sudo docker build -t node-api-exp-04:1.0.0 .
 
 Remove untagged images after Docker reuses repo:tag for new build:
 
@@ -30,11 +30,11 @@ Remove untagged images after Docker reuses repo:tag for new build:
 
 Retrieve build artifacts from Docker container:
 
-    $ sudo docker run --rm -v ${PWD}:/mnt node-api-exp-03:1.0.0 /bin/bash -c 'cp artifacts/* /mnt/.'
+    $ sudo docker run --rm -v ${PWD}:/mnt node-api-exp-04:1.0.0 /bin/bash -c 'cp artifacts/* /mnt/.'
 
 Run bash in Docker container:
 
-    $ sudo docker run --name api-03 --rm -i -t -p 8085:8085 node-api-exp-03:1.0.0 /bin/bash
+    $ sudo docker run --name api-03 --rm -i -t -p 8085:8085 node-api-exp-04:1.0.0 /bin/bash
 
 ### Fig ###
 

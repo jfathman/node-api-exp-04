@@ -1,11 +1,11 @@
 {
-  "name": "node-api-exp-03",
+  "name": "node-api-exp-04",
   "version": "1.0.2",
   "description": "Docker Node API",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jfathman/node-api-exp-03"
+    "url": "https://github.com/jfathman/node-api-exp-04"
   },
   "scripts": {
     "test": "node_modules/.bin/grunt test"
