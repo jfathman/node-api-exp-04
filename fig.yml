@@ -1,0 +1,21 @@
+# fig.yml
+
+mongodb:
+  image: mongo:2.6.5
+  command: mongod --smallfiles
+
+redis:
+  image: redis:2.8.17
+
+app:
+  build: .
+  links:
+   - mongodb
+   - redis
+  ports:
+   - "8085:8085"
+  volumes:
+   - ./:/mnt
+  environment:
+   - NODE_ENV=prod
+
