@@ -11,6 +11,8 @@ APP_VERSION=$(cat package.json | jq -r '.version')
 
 FIG_NAME=$(echo $APP_NAME | sed 's/-//g')_app
 
+DOCKERHUB_ACCOUNT=jfathman
+
 main()
 {
   if [ "$#" -eq 0 ]; then
@@ -57,10 +59,8 @@ main()
         sudo fig run --rm redis redis-cli -h redis
         ;;
       push)
-        getArtifactoryAccount
-        sudo docker tag ${FIG_NAME}:${APP_VERSION} ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
-        sudo docker push ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
-        sudo docker rmi ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
+        sudo docker tag ${FIG_NAME}:${APP_VERSION} ${DOCKERHUB_ACCOUNT}/${FIG_NAME}:${APP_VERSION}
+        sudo docker push ${DOCKERHUB_ACCOUNT}/${FIG_NAME}:${APP_VERSION}
         ;;
       help | -help | --help)
         usage 0
@@ -84,21 +84,9 @@ usage()
   echo "$0 bash      Run bash in app container"
   echo "$0 mongo     Run mongo client shell in mongodb container"
   echo "$0 redis     Run redis client shell in redis container"
-  echo "$0 push      Push Docker image to Artifactory repository"
+  echo "$0 push      Push Docker image to DockerHub registry"
   echo "$0 help      Display help information"
   exit "$1"
-}
-
-getArtifactoryAccount()
-{
-  # Precondition: ~/.dockercfg contains a single subdomain for artifactory.
-  # Parse ~/.dockercfg, select subdomain from subdomain.artifactory.com, use it as artifactory account name.
-  SUBDOMAIN=$(sudo cat ~/.dockercfg | jq -r 'keys | .[]' | grep artifactory | awk -F/ '{print $3}' | cut -f1 -d.)
-  if [ -z "$SUBDOMAIN" ]; then
-    echo "ERROR: could not parse artifactory subdomain from ~/.dockercfg"
-    exit 1
-  fi
-  ARTIFACTORY_ACCOUNT=${SUBDOMAIN}
 }
 
 main "$@"
