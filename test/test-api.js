@@ -19,9 +19,11 @@ var testPassword = '1234';
 var testInvalidUsername = 'xxx';
 var testInvalidPassword = '9999';
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 describe('Test API REST API', function() {
   it('Create base URI', function(done) {
-    var apiUriBase = 'http://' + host + ':' + port + '/api/' + apiVersion;
+    var apiUriBase = 'https://' + host + ':' + port + '/api/' + apiVersion;
     request = request(apiUriBase);
     console.log('      ' + apiUriBase);
     done();
@@ -76,16 +78,16 @@ describe('Test API REST API', function() {
 
   // load test:
 
-  it('GET /abc/123, load test 5000 requests, expect < 30 sec', function(done) {
-    this.timeout(30000);
+  it('GET /abc/123, load test 1000 requests, expect < 60 sec', function(done) {
+    this.timeout(60000);
     var options = {
-      url: 'http://' + testUsername + ':' + testPassword + '@' + host + ':' + port + '/api/' + apiVersion + '/abc/123',
-      concurrency: 10,
-      maxRequests: 5000
+      url: 'https://' + testUsername + ':' + testPassword + '@' + host + ':' + port + '/api/' + apiVersion + '/abc/123',
+      concurrency: 5,
+      maxRequests: 1000
     };
     loadtest.loadTest(options, function(err, result) {
       should.not.exist(err);
-      (result.totalTimeSeconds < 30).should.equal(true);
+      (result.totalTimeSeconds < 60).should.equal(true);
       done();
     });
   });

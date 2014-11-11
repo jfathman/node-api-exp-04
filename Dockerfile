@@ -33,10 +33,4 @@ RUN mkdir -p ./artifacts
 
 RUN ./make-deb.sh 0 && mv *.deb ./artifacts
 
-ENV SSL_COMMON_NAME app-server.microservices.io
-
-RUN openssl req -x509 -newkey rsa:2048 -days 3650 -nodes \
-  -subj "/C=US/ST=Texas/L=Plano/CN=${SSL_COMMON_NAME}" \
-  -keyout ${SSL_COMMON_NAME}-key.pem -out ${SSL_COMMON_NAME}-cert.pem
-
 CMD ["node", "app.js"]

@@ -3,10 +3,12 @@
 'use strict';
 
 var async        = require('async');
-var express      = require('express');
 var basicAuth    = require('basic-auth');
 var bodyParser   = require('body-parser');
 var cookieParser = require('cookie-parser');
+var express      = require('express');
+var fs           = require('fs');
+var https        = require('https');
 var mongoose     = require('mongoose');
 var redis        = require('redis');
 
@@ -17,6 +19,10 @@ var mongoDbPort = process.env.MONGODB_PORT_27017_TCP_PORT || 27017;
 var expressPort = process.env.HTTP_PORT || 8085;
 
 var testMode    = process.env.NODE_ENV === 'test';
+
+var commonName  = 'app-server.microservices.io';
+var sslKeyFile  = './ssl-certs/' + commonName + '-key.pem';
+var sslCertFile = './ssl-certs/' + commonName + '-cert.pem';
 
 var db          = null;
 var redisClient = null;
@@ -165,7 +171,12 @@ function startExpress(callback) {
 
   // start server
 
-  app.listen(expressPort, function() {
+  https.createServer({
+    key:  fs.readFileSync(sslKeyFile),
+    cert: fs.readFileSync(sslCertFile),
+    requestCert: true,
+    rejectUnauthorized: false
+  }, app).listen(expressPort, function() {
     // grunt-express-server waits for 'server started' to begin mock test
     console.log(Date(), 'server started port:', expressPort);
     callback(null);

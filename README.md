@@ -79,12 +79,17 @@ Run redis client shell in redis container:
     redis:6379> KEYS "*"
     redis:6379> GET 123
 
-### Permit Jenkins to run Docker ###
+### Create SSL Key/Cert Files ###
+
+    $ COMMON_NAME=app-server.microservices.io
+    $ openssl req -x509 -newkey rsa:2048 -days 3650 -nodes -subj "/C=US/ST=Texas/L=Plano/CN=${COMMON_NAME}" -keyout ${COMMON_NAME}-key.pem -out ${COMMON_NAME}-cert.pem
+
+### Permit Jenkins to Run Docker ###
 
     $ sudo usermod -a -G docker jenkins
     $ sudo service jenkins restart
 
-### Permit Jenkins to access Artifactory ###
+### Permit Jenkins to Access Artifactory ###
 
     $ cat /var/lib/jenkins/.dockercfg 
     {
@@ -105,9 +110,12 @@ Run redis client shell in redis container:
 
     ${WORKSPACE}/artifacts/*
 
-### Manual Curl Test ###
+### Manual Curl Tests ###
 
-    $ curl --user jmf:1234 http://{ip}:8085/api/v1/abc/123 -i -X GET
+    $ curl -k --user jmf:1234 https://{ip}:8085/api/v1/abc/123 -i -X POST
+    $ curl -k --user jmf:1234 https://{ip}:8085/api/v1/abc/123 -i -X PUT
+    $ curl -k --user jmf:1234 https://{ip}:8085/api/v1/abc/123 -i -X GET
+    $ curl -k --user jmf:1234 https://{ip}:8085/api/v1/abc/123 -i -X DELETE
 
 ### License ###
 
