@@ -16,6 +16,10 @@ app:
    - "8085:8085"
   volumes:
    - ./:/mnt
+  hostname:
+   - app-server
+  domainname:
+   - microservices.io
   environment:
    - NODE_ENV=prod
 

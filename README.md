@@ -5,8 +5,8 @@
   * REST API application
   * Microservices architecture
   * API mock tests using Mocha, Chai, Supertest, Loadtest
-  * HTTPS API endpoints with Basic Auth
-  * Self-signed certificates
+  * HTTPS API with Basic Authentication
+  * SSL self-signed certificates
   * Node.js
   * Express 4
   * Redis
