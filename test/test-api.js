@@ -78,8 +78,8 @@ describe('Test API REST API', function() {
 
   // load test:
 
-  it('GET /abc/123, load test 1000 requests, expect < 60 sec', function(done) {
-    this.timeout(60000);
+  it('GET /abc/123, load test 1000 requests, expect < 30 sec', function(done) {
+    this.timeout(30000);
     var options = {
       url: 'https://' + testUsername + ':' + testPassword + '@' + host + ':' + port + '/api/' + apiVersion + '/abc/123',
       concurrency: 5,
@@ -87,7 +87,7 @@ describe('Test API REST API', function() {
     };
     loadtest.loadTest(options, function(err, result) {
       should.not.exist(err);
-      (result.totalTimeSeconds < 60).should.equal(true);
+      (result.totalTimeSeconds < 30).should.equal(true);
       done();
     });
   });
