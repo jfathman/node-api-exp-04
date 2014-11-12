@@ -113,7 +113,7 @@ Run redis client shell in redis container:
     $ sudo usermod -a -G docker jenkins
     $ sudo service jenkins restart
 
-### Permit Jenkins to access Artifactory ###
+### Permit Jenkins to access DockerHub ###
 
     $ cat /var/lib/jenkins/.dockercfg 
     {

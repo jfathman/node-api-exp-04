@@ -57,7 +57,11 @@ main()
 
   mkdir -p ./artifacts
 
+  cd ./artifacts
+
   fig run -T --rm --no-deps app bash -c 'cp artifacts/* /mnt/.'
+
+  cd ..
 
   ls -l ./artifacts
 
