@@ -11,8 +11,6 @@ APP_VERSION=$(cat package.json | jq -r '.version')
 
 FIG_NAME=$(echo $APP_NAME | sed 's/-//g')_app
 
-DOCKERHUB_ACCOUNT=jfathman
-
 main()
 {
   if [ "$#" -eq 0 ]; then
@@ -59,8 +57,10 @@ main()
         sudo fig run --rm redis redis-cli -h redis
         ;;
       push)
-        sudo docker tag ${FIG_NAME}:${APP_VERSION} ${DOCKERHUB_ACCOUNT}/${FIG_NAME}:${APP_VERSION}
-        sudo docker push ${DOCKERHUB_ACCOUNT}/${FIG_NAME}:${APP_VERSION}
+        USERNAME=$(cat package.json | jq -r '.dockerHub.username')
+        sudo docker tag ${FIG_NAME}:${APP_VERSION} ${USERNAME}/${FIG_NAME}:${APP_VERSION}
+        sudo docker push ${USERNAME}/${FIG_NAME}:${APP_VERSION}
+        sudo docker rmi ${USERNAME}/${FIG_NAME}:${APP_VERSION}
         ;;
       help | -help | --help)
         usage 0
