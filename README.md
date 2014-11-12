@@ -79,7 +79,7 @@ Run redis client shell in redis container:
     redis:6379> KEYS "*"
     redis:6379> GET 123
 
-### docker.sh ###
+### Convenience Script: docker.sh ###
 
     $ ./docker.sh 
     ./docker.sh build     Build Docker image
@@ -88,7 +88,7 @@ Run redis client shell in redis container:
     ./docker.sh bash      Run bash in Docker container
     ./docker.sh help      Display help information
 
-### fig.sh ###
+### Convenience Script: fig.sh ###
 
     $ ./fig.sh 
     ./fig.sh build     Build Fig services
