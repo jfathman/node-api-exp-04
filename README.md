@@ -112,6 +112,7 @@ Run redis client shell in redis container:
 
     $ sudo usermod -a -G docker jenkins
     $ sudo service jenkins restart
+    $ sudo docker login
 
 ### Jenkins Execute Shell Command ###
 
