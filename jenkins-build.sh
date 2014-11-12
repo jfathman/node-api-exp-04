@@ -4,8 +4,6 @@
 
 set -e
 
-# Assumes prior export ARTIFACTORY_ACCOUNT is available.
-
 # Requires Fig >= 1.0.1 to capture Fig output in Jenkins build log.
 
 main()
@@ -22,13 +20,15 @@ main()
   jq --version
 
   set +x
-  annotate "Get application name and version from package.json."
+  annotate "Get application information from package.json."
 
   APP_NAME=$(cat package.json | jq -r '.name')
 
   APP_VERSION=$(cat package.json | jq -r '.version')
 
   FIG_NAME=$(echo $APP_NAME | sed 's/-//g')_app
+
+  USERNAME=$(cat package.json | jq -r '.dockerHub.username')
 
   set +x
   annotate "Build Docker image."
@@ -62,19 +62,19 @@ main()
   ls -l ./artifacts
 
   set +x
-  annotate "Tag Docker image for Artifactory."
+  annotate "Tag Docker image for DockerHub."
 
-  docker tag ${FIG_NAME}:${APP_VERSION} ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
-
-  set +x
-  annotate "Push Docker image to Artifactory."
-
-  docker push ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
+  docker tag ${FIG_NAME}:${APP_VERSION} ${USERNAME}/${FIG_NAME}:${APP_VERSION}
 
   set +x
-  annotate "Remove tag added for Artifactory."
+  annotate "Push Docker image to DockerHub."
 
-  docker rmi ${ARTIFACTORY_ACCOUNT}.artifactoryonline.com/${FIG_NAME}:${APP_VERSION}
+  docker push ${USERNAME}/${FIG_NAME}:${APP_VERSION}
+
+  set +x
+  annotate "Remove tag added for DockerHub."
+
+  docker rmi ${USERNAME}/${FIG_NAME}:${APP_VERSION}
 
   set +x
   annotate "Build complete."
