@@ -57,7 +57,7 @@ main()
 
   mkdir -p ./artifacts
 
-  docker run --rm -v ${PWD}:/mnt ${FIG_NAME}:${APP_VERSION} /bin/bash -c 'cp artifacts/* /mnt/.'
+  docker run --rm -v ${PWD}/artifacts:/mnt ${FIG_NAME}:${APP_VERSION} /bin/bash -c 'cp artifacts/* /mnt/.'
 
   ls -l ./artifacts
 
