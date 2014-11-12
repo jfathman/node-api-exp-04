@@ -113,19 +113,8 @@ Run redis client shell in redis container:
     $ sudo usermod -a -G docker jenkins
     $ sudo service jenkins restart
 
-### Permit Jenkins to Access Artifactory ###
-
-    $ cat /var/lib/jenkins/.dockercfg 
-    {
-      "https://${account_name}.artifactoryonline.com": {
-        "auth":"base64encodedUser:Password",
-        "email":"user@example.com"
-      }
-    }
-
 ### Jenkins Execute Shell Command ###
 
-    export ARTIFACTORY_ACCOUNT=${account_name}
     bash ${WORKSPACE}/jenkins-build.sh
     set +x # do not log auth credentials
     curl --progress-bar -o artifacts/build.log -u ${userId}:${apiToken} ${BUILD_URL}/consoleText
