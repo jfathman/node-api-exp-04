@@ -79,6 +79,30 @@ Run redis client shell in redis container:
     redis:6379> KEYS "*"
     redis:6379> GET 123
 
+### docker.sh ###
+
+    $ ./docker.sh 
+    ./docker.sh build     Build Docker image
+    ./docker.sh purge     Remove untagged images after Docker reuses repo:tag for new build
+    ./docker.sh retrieve  Retrieve build artifacts from Docker container
+    ./docker.sh bash      Run bash in Docker container
+    ./docker.sh help      Display help information
+
+### fig.sh ###
+
+    $ ./fig.sh 
+    ./fig.sh build     Build Fig services
+    ./fig.sh purge     Remove untagged images after new build reuses repo:tag
+    ./fig.sh retrieve  Retrieve build artifacts from app container
+    ./fig.sh test      Run mock tests including load test in app container
+    ./fig.sh up        Run Node app.js in production mode in app container
+    ./fig.sh stop      Stop Fig services
+    ./fig.sh bash      Run bash in app container
+    ./fig.sh mongo     Run mongo client shell in mongodb container
+    ./fig.sh redis     Run redis client shell in redis container
+    ./fig.sh push      Push Docker image to DockerHub registry
+    ./fig.sh help      Display help information
+
 ### Create SSL Key/Cert Files ###
 
     $ COMMON_NAME=app-server.microservices.io
