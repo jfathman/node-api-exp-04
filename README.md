@@ -112,7 +112,16 @@ Run redis client shell in redis container:
 
     $ sudo usermod -a -G docker jenkins
     $ sudo service jenkins restart
-    $ sudo docker login
+
+### Permit Jenkins to access Artifactory ###
+
+    $ cat /var/lib/jenkins/.dockercfg 
+    {
+      "https://index.docker.io/v1/": {
+        "auth":"base64encodedUser:Password",
+        "email":"user@example.com"
+      }
+    }
 
 ### Jenkins Execute Shell Command ###
 

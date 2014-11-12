@@ -31,6 +31,8 @@ RUN ln -s ${APP_DIR}/node_modules/.bin/* /usr/local/bin/.
 
 RUN mkdir -p ./artifacts
 
-RUN ./make-deb.sh 0 && mv *.deb ./artifacts
+RUN ./make-deb.sh 0
+
+RUN mv *.deb ./artifacts
 
 CMD ["node", "app.js"]
